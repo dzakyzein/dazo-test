@@ -9,7 +9,7 @@ defineProps({
     <button
         :type="type"
         :class="[
-            'px-4 py-2 rounded-2xl text-sm font-medium shadow',
+            'px-4 py-2 rounded-2xl text-sm font-medium shadow-sm',
             variant === 'primary'
                 ? 'bg-indigo-600 text-white hover:bg-indigo-700'
                 : variant === 'ghost'

@@ -54,7 +54,7 @@ const doDelete = () => {
                         <td class="p-3 flex items-center gap-2">
                             <img
                                 :src="p.image ?? '/img/default.png'"
-                                class="w-8 h-8 rounded"
+                                class="w-8 h-8 rounded-sm"
                             />
                             <span
                                 >{{ p.name }} <br /><span
@@ -81,7 +81,7 @@ const doDelete = () => {
                             <div class="relative">
                                 <button class="px-2">⋮</button>
                                 <div
-                                    class="absolute right-0 mt-2 bg-white border rounded shadow w-32"
+                                    class="absolute right-0 mt-2 bg-white border rounded-sm shadow-sm w-32"
                                 >
                                     <button
                                         @click="

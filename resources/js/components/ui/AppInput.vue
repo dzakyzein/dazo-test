@@ -15,7 +15,7 @@ const emit = defineEmits(["update:modelValue"]);
         <input
             :type="type"
             :placeholder="placeholder"
-            class="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring"
+            class="w-full border rounded-xl px-3 py-2 focus:outline-hidden focus:ring-3"
             :value="modelValue"
             @input="(e) => emit('update:modelValue', e.target.value)"
         />

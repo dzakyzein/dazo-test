@@ -3,12 +3,12 @@
         <nav class="p-4 space-y-2">
             <a
                 href="/products"
-                class="block px-3 py-2 rounded hover:bg-gray-100"
+                class="block px-3 py-2 rounded-sm hover:bg-gray-100"
                 >Products</a
             >
             <a
                 href="/categories"
-                class="block px-3 py-2 rounded hover:bg-gray-100"
+                class="block px-3 py-2 rounded-sm hover:bg-gray-100"
                 >Categories</a
             >
         </nav>
