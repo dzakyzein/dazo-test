@@ -12,7 +12,6 @@ class Product extends Model
     protected $connection = 'mongodb';
     protected $collection = 'products';
 
-    // PERBAIKAN: Sesuaikan fillable dengan field dari form Vue.js
     protected $fillable = [
         'name',
         'category_id',
@@ -27,6 +26,6 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id', '_id'); // Gunakan '_id' untuk relasi MongoDB
+        return $this->belongsTo(Category::class, 'category_id', '_id');
     }
 }

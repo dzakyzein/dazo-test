@@ -17,7 +17,7 @@ class CreateProductsCollection extends Migration
             $collection->string('status');
             $collection->integer('selling_price');
             $collection->integer('special_price')->nullable();
-            $collection->string('imageUrl')->nullable(); // Menambahkan kolom imageUrl
+            $collection->string('imageUrl')->nullable();
             $collection->timestamps();
         });
     }

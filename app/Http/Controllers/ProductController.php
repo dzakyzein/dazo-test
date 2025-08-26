@@ -27,19 +27,18 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // PERBAIKAN: Sesuaikan validasi dengan field dari form Vue.js
         $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'required|string|exists:categories,_id', // Menggunakan _id untuk MongoDB
+            'category_id' => 'required|string|exists:categories,_id',
             'sku' => 'required|string',
             'active' => 'required|boolean',
             'stock' => 'required|numeric',
             'cost' => 'required|numeric',
             'price' => 'required|numeric',
             'special_price' => 'nullable|numeric',
+            'imageUrl' => 'nullable|string'
         ]);
 
-        // Simpan data ke koleksi 'products'
         Product::create($request->all());
 
         return redirect()->route('products.index');
@@ -49,5 +48,16 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index');
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'active' => 'sometimes|boolean'
+        ]);
+
+        $product->update($request->only('active'));
+
+        return redirect()->back();
     }
 }
