@@ -1,19 +1,29 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void
+class CreateProductsCollection extends Migration
+{
+    public function up()
     {
-        Schema::connection('mongodb')->create('products', function ($collection) {});
-        Schema::connection('mongodb')->table('products', function ($collection) {
-            $collection->index('sku');
-            $collection->index('category_id');
+        Schema::create('products', function (Blueprint $collection) {
+            $collection->string('name');
+            $collection->string('variant');
+            $collection->string('type');
+            $collection->string('category_id');
+            $collection->text('description')->nullable();
+            $collection->string('status');
+            $collection->integer('selling_price');
+            $collection->integer('special_price')->nullable();
+            $collection->string('imageUrl')->nullable(); // Menambahkan kolom imageUrl
+            $collection->timestamps();
         });
     }
-    public function down(): void
+
+    public function down()
     {
-        Schema::connection('mongodb')->drop('products');
+        Schema::dropIfExists('products');
     }
-};
+}

@@ -1,20 +1,21 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up(): void
+class CreateCategoriesCollection extends Migration
+{
+    public function up()
     {
-        Schema::connection('mongodb')->create('categories', function ($collection) {
-            // kolom dibuat saat insert; cukup pastikan index
-        });
-        Schema::connection('mongodb')->table('categories', function ($collection) {
-            $collection->index('name');
+        Schema::create('categories', function (Blueprint $collection) {
+            $collection->string('name');
+            $collection->timestamps();
         });
     }
-    public function down(): void
+
+    public function down()
     {
-        Schema::connection('mongodb')->drop('categories');
+        Schema::dropIfExists('categories');
     }
-};
+}

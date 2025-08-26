@@ -4,53 +4,46 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->orderBy('_id', 'desc')->paginate(10);
-        $categories = Category::select(['_id', 'name'])->get();
+        $products = Product::with('category')->paginate(10);
         return Inertia::render('Products/Index', [
             'products' => $products,
-            'categories' => $categories,
         ]);
     }
 
     public function create()
     {
+        $categories = Category::all();
         return Inertia::render('Products/Create', [
-            'categories' => Category::select(['_id', 'name'])->get(),
+            'categories' => $categories,
         ]);
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        Product::create($request->validated());
-        return redirect()->route('products.index')->with('success', 'Product created');
-    }
-
-    public function edit(Product $product)
-    {
-        $product->load('category');
-        return Inertia::render('Products/Edit', [
-            'product' => $product,
-            'categories' => Category::select(['_id', 'name'])->get(),
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'variant' => 'required|string',
+            'type' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'status' => 'required|string',
+            'selling_price' => 'required|numeric',
         ]);
-    }
 
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-        $product->update($request->validated());
-        return redirect()->route('products.index')->with('success', 'Product updated');
+        Product::create($request->all());
+
+        return redirect()->route('products.index');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return back()->with('success', 'Product deleted');
+        return redirect()->route('products.index');
     }
 }
