@@ -28,27 +28,25 @@ const toggleSidebar = () => {
 
 <template>
     <aside
-        class="flex flex-col h-full px-4 py-8 overflow-y-auto bg-gray-900 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-800 dark:border-gray-700 relative w-full"
+        class="flex flex-col h-screen px-4 py-8 overflow-y-auto overflow-x-hidden bg-gray-900 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-800 dark:border-gray-700 relative transition-all duration-300 ease-in-out"
         :class="{
             'w-64': isOpen,
             'w-0 overflow-hidden': !isOpen,
         }"
     >
+        <!-- HEADER -->
         <div v-if="isOpen" class="flex items-center justify-between mb-6">
-            <a href="#" class="mx-auto text-2xl font-bold text-white"
-                >Dazo.id</a
+            <a href="#" class="text-2xl font-bold text-white">Dazo.id</a>
+            <!-- Tombol toggle saat sidebar terbuka -->
+            <button
+                @click="toggleSidebar"
+                class="text-white hover:text-gray-300 focus:outline-none"
             >
+                <ChevronLeftIcon class="w-5 h-5" />
+            </button>
         </div>
 
-        <!-- Toggle Button -->
-        <button
-            @click="toggleSidebar"
-            class="absolute -right-3 top-8 bg-gray-700 text-white p-1 rounded-full shadow-lg focus:outline-none z-50"
-        >
-            <ChevronLeftIcon v-if="isOpen" class="w-5 h-5" />
-            <ChevronRightIcon v-else class="w-5 h-5" />
-        </button>
-
+        <!-- NAV -->
         <div v-if="isOpen" class="flex flex-col justify-between flex-1 mt-6">
             <nav class="flex-1 -mx-3 space-y-2">
                 <div>
@@ -71,7 +69,7 @@ const toggleSidebar = () => {
                     <div v-show="productMenuOpen" class="mt-2 space-y-2">
                         <Link
                             :href="route('products.index')"
-                            class="flex items-center w-full px-6 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg dark:text-gray-400 hover:bg-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-200 hover:text-gray-100"
+                            class="flex items-center w-full px-6 py-2 text-gray-300 transition-colors duration-300 transform rounded-lg hover:bg-gray-700 hover:text-gray-100"
                         >
                             <span class="mx-2 text-sm font-medium"
                                 >Daftar Produk</span
@@ -82,4 +80,13 @@ const toggleSidebar = () => {
             </nav>
         </div>
     </aside>
+
+    <!-- Tombol toggle saat sidebar tertutup -->
+    <button
+        v-if="!isOpen"
+        @click="toggleSidebar"
+        class="absolute left-0 top-8 bg-gray-900 text-white p-2 rounded-r-lg shadow-lg z-50"
+    >
+        <ChevronRightIcon class="w-5 h-5" />
+    </button>
 </template>

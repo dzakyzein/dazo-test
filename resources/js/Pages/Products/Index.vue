@@ -2,7 +2,7 @@
 import { reactive } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import AppButton from "@/Components/ui/AppButton.vue";
-import AppModal from "@/components/ui/AppModal.vue";
+import AppModal from "@/Components/ui/AppModal.vue";
 import { router } from "@inertiajs/vue3";
 
 defineOptions({ layout: AppLayout });
@@ -17,7 +17,10 @@ const confirmDelete = (id) => {
 
 const doDelete = () => {
     router.delete(route("products.destroy", state.toDelete), {
-        onSuccess: () => (state.open = false),
+        onSuccess: () => {
+            state.open = false;
+            state.toDelete = null;
+        },
     });
 };
 
@@ -64,7 +67,7 @@ const toggleStatus = (product) => {
             >
         </div>
 
-        <div class="bg-white rounded-xl border overflow-x-auto">
+        <div class="bg-white rounded-xl border overflow-visible">
             <table class="min-w-full text-sm">
                 <thead class="bg-gray-50 text-gray-500">
                     <tr>
@@ -148,7 +151,9 @@ const toggleStatus = (product) => {
                                     <button
                                         @click="
                                             $inertia.visit(
-                                                route('products.edit', p._id),
+                                                route('products.edit', {
+                                                    product: p.id,
+                                                }),
                                             )
                                         "
                                         class="block w-full px-4 py-2 text-left hover:bg-gray-100 text-sm"
@@ -156,7 +161,7 @@ const toggleStatus = (product) => {
                                         ✎ Edit Produk
                                     </button>
                                     <button
-                                        @click="confirmDelete(p._id)"
+                                        @click="confirmDelete(p.id)"
                                         class="block w-full px-4 py-2 text-left hover:bg-gray-100 text-red-600 text-sm"
                                     >
                                         🗑 Hapus Produk
