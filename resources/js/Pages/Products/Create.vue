@@ -3,6 +3,7 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import AppInput from "@/Components/ui/AppInput.vue";
 import AppButton from "@/Components/ui/AppButton.vue";
 import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineOptions({ layout: AppLayout });
 const props = defineProps({ categories: Array });
@@ -31,13 +32,17 @@ const submit = () => form.post(route("products.store"));
                     @click="$inertia.visit(route('products.index'))"
                     >Kembali</AppButton
                 >
+                <!-- PERBAIKAN: Gunakan @click="submit" atau type="submit" pada tag form -->
                 <AppButton class="bg-blue-600 text-white" @click="submit"
                     >Tambah Produk</AppButton
                 >
             </div>
         </div>
 
-        <div class="bg-white rounded-xl border p-6 space-y-6">
+        <form
+            @submit.prevent="submit"
+            class="bg-white rounded-xl border p-6 space-y-6"
+        >
             <section>
                 <h3 class="font-medium mb-3">Informasi Produk</h3>
                 <AppInput label="Nama Produk *" v-model="form.name" />
@@ -89,6 +94,6 @@ const submit = () => form.post(route("products.store"));
                     />
                 </div>
             </section>
-        </div>
+        </form>
     </div>
 </template>

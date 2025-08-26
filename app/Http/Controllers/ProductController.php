@@ -27,15 +27,19 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        // PERBAIKAN: Sesuaikan validasi dengan field dari form Vue.js
         $request->validate([
             'name' => 'required|string|max:255',
-            'variant' => 'required|string',
-            'type' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'status' => 'required|string',
-            'selling_price' => 'required|numeric',
+            'category_id' => 'required|string|exists:categories,_id', // Menggunakan _id untuk MongoDB
+            'sku' => 'required|string',
+            'active' => 'required|boolean',
+            'stock' => 'required|numeric',
+            'cost' => 'required|numeric',
+            'price' => 'required|numeric',
+            'special_price' => 'nullable|numeric',
         ]);
 
+        // Simpan data ke koleksi 'products'
         Product::create($request->all());
 
         return redirect()->route('products.index');
